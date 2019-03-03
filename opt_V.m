@@ -6,11 +6,11 @@ function [V, N] = opt_V(AR, S)
 UEFC = GetUEFC;
 
 % Initial guess for optimizer
-N0  = 1.01;
+N0  = 1.1;
 
 % Lower and upper bounds
 lbN = 1.0001;
-ubN = 3.0;
+ubN = 5.0;
 
 lb = [lbN];
 ub = [ubN];
@@ -19,10 +19,12 @@ ub = [ubN];
 x0 = [N0];
 
 % Set-up options for fmincon
-options = optimoptions('fmincon','Algorithm','sqp','Display','off');
+options = optimoptions(@fmincon);
+options.Algorithm = 'sqp';
+options.Display = 'off';
 
 [x,fmin,exitflag] = fmincon(@(x)Calc_nV(x,AR,S),x0,[],[],[],[],lb,ub, ...
-                   @(x)Calc_constraints(x, AR, S), options);
+                   @(x)Calc_constraints(x,AR,S),options);
 if (exitflag > 0),
     V = -fmin;
     N = x;
@@ -30,9 +32,6 @@ else
     V = 0;
     N = 0;
 end
-
-
-
 
 
 
