@@ -21,7 +21,7 @@ CDi = (CL^2)/(pi*AR*e);
 
 % You need to include a drag coefficient increment for the payload (burrito)
 % somewhere here
-CDpay = ?????;
+CDpay = .82;
 
 % Total drag
 CD = CDfuse + CDp + CDi + CDpay;
